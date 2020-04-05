@@ -323,7 +323,7 @@ public static int bitCount(int i) {
     return i & 0x3f;
 }
 ```
-二进制中1的个数, 也称汉明距离  
+二进制中1的个数, 可用来计算[汉明距离](https://leetcode-cn.com/problems/hamming-distance/)  
 思路  
 10101010 10101010 10101010 10101010  
 1. 01010101 01010101 01010101 01010101 <= 每2位有几个1
