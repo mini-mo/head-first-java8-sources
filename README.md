@@ -54,10 +54,26 @@
 ```
 
 # 分析进度
+## java.lang 包
+### 8 个包装类
+- java.lang.Boolean   -> TODO
+- java.lang.Character -> TODO
+- java.lang.Byte      -> TODO
+- java.lang.Short     -> TODO
+- [java.lang.Integer](doc/java.lang.Integer.md)   -> DONIG
+- java.lang.Long      -> TODO
+- java.lang.Float     -> TODO
+- java.lang.Double    -> TODO
+
+### String 相关
+
+### Object 相关
+
+### System 相关
 
 # 相关记录
 - TBD 源码分析环境搭建
-- TBD 源码注释规范
+- [源码注释规范](doc/源码注释规范.md) -> TBD
 
 # 变更日志
 - 200403 初始化
