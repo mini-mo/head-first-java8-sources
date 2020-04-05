@@ -60,7 +60,7 @@
 - java.lang.Character -> TODO
 - java.lang.Byte      -> TODO
 - java.lang.Short     -> TODO
-- [java.lang.Integer](doc/java.lang.Integer.md)   -> DONIG
+- [java.lang.Integer](doc/java.lang.Integer.md)   -> DONE
 - java.lang.Long      -> TODO
 - java.lang.Float     -> TODO
 - java.lang.Double    -> TODO
@@ -72,8 +72,9 @@
 ### System 相关
 
 # 相关记录
-- TBD 源码分析环境搭建
-- [源码注释规范](doc/源码注释规范.md) -> TBD
+- [源码分析环境搭建](doc/analysis-env-setup.md)
+- [源码注释规范](doc/annotaion-spec.md)
 
 # 变更日志
+- 200406 java.lang.Integer
 - 200403 初始化
