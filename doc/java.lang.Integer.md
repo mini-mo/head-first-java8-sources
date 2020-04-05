@@ -196,29 +196,46 @@ public double doubleValue() {
 #### 位运算 方法
 - java.lang.Integer#highestOneBit(int)
 ```java
-    /**
-     * Returns an {@code int} value with at most a single one-bit, in the
-     * position of the highest-order ("leftmost") one-bit in the specified
-     * {@code int} value.  Returns zero if the specified value has no
-     * one-bits in its two's complement binary representation, that is, if it
-     * is equal to zero.
-     *
-     * @param i the value whose highest one bit is to be computed
-     * @return an {@code int} value with a single one-bit, in the position
-     *     of the highest-order one-bit in the specified value, or zero if
-     *     the specified value is itself equal to zero.
-     * @since 1.5
-     */
-    public static int highestOneBit(int i) {
-        // HD, Figure 3-1
-        i |= (i >>  1);
-        i |= (i >>  2);
-        i |= (i >>  4);
-        i |= (i >>  8);
-        i |= (i >> 16);
-        return i - (i >>> 1);
-    }
+/**
+ * Returns an {@code int} value with at most a single one-bit, in the
+ * position of the highest-order ("leftmost") one-bit in the specified
+ * {@code int} value.  Returns zero if the specified value has no
+ * one-bits in its two's complement binary representation, that is, if it
+ * is equal to zero.
+ *
+ * @param i the value whose highest one bit is to be computed
+ * @return an {@code int} value with a single one-bit, in the position
+ *     of the highest-order one-bit in the specified value, or zero if
+ *     the specified value is itself equal to zero.
+ * @since 1.5
+ */
+public static int highestOneBit(int i) {
+    // HD, Figure 3-1
+    i |= (i >>  1);
+    i |= (i >>  2);
+    i |= (i >>  4);
+    i |= (i >>  8);
+    i |= (i >> 16);
+    return i - (i >>> 1);
+}
+// 00000000 10110000 00000000 00000000
+// 00000000 01111000 00000000 00000000 1
+// 00000000 01111110 00000000 00000000 2
+// 00000000 01111111 11100000 00000000 4
+// 00000000 01111111 11111111 11100000 8
+// 00000000 01111111 11111111 11111111 16
+// 00000000 01000000 00000000 00000000 i - (i >>> 1)
 ```
+返回i的二进制中最高位的1, 其他全为0的值. 如 0b1111 -> 15 => 0b1000 -> 8  
+对于负数, 返回 0x8000000  
+对于0, 返回0  
+对于正数  
+1. i | (i>>1) , 定位到最高位1的位置n. 保证 n,n+1 位置为1.
+2. i | (i>>2) , 保证 n,n+1,n+2,n+3 位置为1.
+3. i | (i>>4) , 保证 n,n+1,n+2,n+3..n+7 位置为1.
+4. i | (i>>8) , 保证 n,n+1,n+2,n+3..n+15 位置为1.
+5. i | (i>>16) , 保证 n,n+1,n+2,n+3..n+31 位置为1.
+6. i - (i>>>1) 得到 n 位为1, n之后的所有位置为0 的值. 即结果.
 
 - java.lang.Integer#lowestOneBit(int)
 ```java
@@ -239,7 +256,13 @@ public static int lowestOneBit(int i) {
     // HD, Section 2-1
     return i & -i;
 }
+
+0000 1100
+1111 0100
+0000 0100
 ```
+返回i的二进制中最低位1，其他全为0的值  
+负数的补码是正数反码+1, 与正数补码皆为1的位置一定是最后一个1.
 
 - java.lang.Integer#numberOfLeadingZeros(int)
 ```java
@@ -264,18 +287,18 @@ public static int lowestOneBit(int i) {
      *     is equal to zero.
      * @since 1.5
      */
-    public static int numberOfLeadingZeros(int i) {
-        // HD, Figure 5-6
-        if (i == 0)
-            return 32;
-        int n = 1;
-        if (i >>> 16 == 0) { n += 16; i <<= 16; }
-        if (i >>> 24 == 0) { n +=  8; i <<=  8; }
-        if (i >>> 28 == 0) { n +=  4; i <<=  4; }
-        if (i >>> 30 == 0) { n +=  2; i <<=  2; }
-        n -= i >>> 31;
-        return n;
-    
+public static int numberOfLeadingZeros(int i) {
+    // HD, Figure 5-6
+    if (i == 0)
+        return 32;
+    int n = 1;
+    if (i >>> 16 == 0) { n += 16; i <<= 16; }
+    if (i >>> 24 == 0) { n +=  8; i <<=  8; }
+    if (i >>> 28 == 0) { n +=  4; i <<=  4; }
+    if (i >>> 30 == 0) { n +=  2; i <<=  2; }
+    n -= i >>> 31;
+    return n;
+}
 ```
 
 - java.lang.Integer#bitCount(int)
