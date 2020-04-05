@@ -25,11 +25,7 @@ public static final Class<Integer>  TYPE = (Class<Integer>) Class.getPrimitiveCl
 
 ## 内部类
 ### IntegerCache
-Integer 对象的缓冲池. 默认缓冲 -127 - 128 共 256 个 Integer 对象. 主要用于自动拆装箱和面试(-:).  
-源码如下, 可以看出 high 是可以自定义的. high 的最大值为 Integer.MAX_VALUE, 最小值为 128.
-
 ```java
-
 private static class IntegerCache {
         static final int low = -128;
         static final int high;
@@ -64,6 +60,9 @@ private static class IntegerCache {
         private IntegerCache() {}
     }
 ```
+Integer 对象的缓冲池. 默认缓冲 -127 - 128 共 256 个 Integer 对象. 主要用于自动拆装箱和面试(-:).  
+源码如下, 可以看出 high 是可以自定义的. high 的最大值为 Integer.MAX_VALUE - 129 , 最小值为 128.
+
 
 ## 主要方法
 ### 构造函数
