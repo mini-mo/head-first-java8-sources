@@ -60,8 +60,8 @@ private static class IntegerCache {
         private IntegerCache() {}
     }
 ```
-Integer 对象的缓冲池. 默认缓冲 -127 - 128 共 256 个 Integer 对象. 主要用于自动拆装箱和面试(-:).  
-源码如下, 可以看出 high 是可以自定义的. high 的最大值为 Integer.MAX_VALUE - 129 , 最小值为 128.
+Integer 对象的缓冲池. 默认缓冲 -128 - 127 共 256 个 Integer 对象. 主要用于自动拆装箱和面试(-:).  
+源码如下, 可以看出 high 是可以自定义的. high 的最大值为 Integer.MAX_VALUE - 129 , 最小值为 127.
 
 
 ## 主要方法
