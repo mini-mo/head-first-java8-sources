@@ -3,8 +3,26 @@ package lang;
 public class Integer {
 
   public static void main(String[] args) {
+    test_bitCount();
     test_reverse();
     test_reverseBytes();
+  }
+
+  public static void test_bitCount() {
+    int x = 0xaaaaaaaa;
+    int y = 16;
+//    int count = bitCount(x);
+    int count = java.lang.Integer.bitCount(x);
+    assertEquals(y,count);
+  }
+
+  public static int bitCount(int i) {
+    int cnt = 0;
+    while (i != 0) {
+      i &= i - 1;
+      cnt++;
+    }
+    return cnt;
   }
 
   public static void test_reverse() {
