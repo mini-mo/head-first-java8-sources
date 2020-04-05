@@ -3,7 +3,15 @@ package lang;
 public class Integer {
 
   public static void main(String[] args) {
+    test_reverse();
     test_reverseBytes();
+  }
+
+  public static void test_reverse() {
+    int x = 0b10101010101010101010101010101010;
+    int y = 0b01010101010101010101010101010101;
+    int reversed = java.lang.Integer.reverse(x);
+    assertEquals(y, reversed);
   }
 
   public static void test_reverseBytes() {

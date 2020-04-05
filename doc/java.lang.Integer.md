@@ -303,26 +303,39 @@ public static int bitCount(int i) {
 
 - java.lang.Integer#reverse(int)
 ```java
-    /**
-     * Returns the value obtained by reversing the order of the bits in the
-     * two's complement binary representation of the specified {@code int}
-     * value.
-     *
-     * @param i the value to be reversed
-     * @return the value obtained by reversing order of the bits in the
-     *     specified {@code int} value.
-     * @since 1.5
-     */
-    public static int reverse(int i) {
-        // HD, Figure 7-1
-        i = (i & 0x55555555) << 1 | (i >>> 1) & 0x55555555;
-        i = (i & 0x33333333) << 2 | (i >>> 2) & 0x33333333;
-        i = (i & 0x0f0f0f0f) << 4 | (i >>> 4) & 0x0f0f0f0f;
-        i = (i << 24) | ((i & 0xff00) << 8) |
-            ((i >>> 8) & 0xff00) | (i >>> 24);
-        return i;
-    }
+/**
+ * Returns the value obtained by reversing the order of the bits in the
+ * two's complement binary representation of the specified {@code int}
+ * value.
+ *
+ * @param i the value to be reversed
+ * @return the value obtained by reversing order of the bits in the
+ *     specified {@code int} value.
+ * @since 1.5
+ */
+public static int reverse(int i) {
+    // HD, Figure 7-1
+    i = (i & 0x55555555) << 1 | (i >>> 1) & 0x55555555;
+    i = (i & 0x33333333) << 2 | (i >>> 2) & 0x33333333;
+    i = (i & 0x0f0f0f0f) << 4 | (i >>> 4) & 0x0f0f0f0f;
+    i = (i << 24) | ((i & 0xff00) << 8) |
+        ((i >>> 8) & 0xff00) | (i >>> 24);
+    return i;
+}
+
 ```
+二进制反转, 1-32,2-31,3-30..., e.g 0b10101010101010101010101010101010 -> 0b01010101010101010101010101010101  
+算法思路  
+以 32 位反转为例  
+10110001 00111010 11000101 00110011  
+1. 数据            => 10110001 00111010 11000101 00110011  
+1. 每2位互换        => 01110010 00110101 11001010 00110011  
+2. 每4位中2位互换    => 11011000 11000101 00111010 11001100  
+3. 每8位中4位互换    => 10001101 01011100 10100011 11001100  
+4. 每16位中8位互换   => 01011100 10001101 11001100 10100011  
+5. 每32位中16位互换  => 11001100 10100011 01011100 10001101  
+  
+4.5两步实际上就是反转字节. b1b2b3b4 -> b2b1b4b3 -> b4b3b2b1  
 
 - java.lang.reverseBytes(int)
 ```java
