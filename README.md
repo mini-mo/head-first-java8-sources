@@ -98,8 +98,8 @@
 ## java.util.logging 包
 
 # 相关记录
-- [✅源码分析环境搭建](doc/analysis-env-setup.md)
-- [✅源码注释规范](doc/annotaion-spec.md)
+- ✅ [源码分析环境搭建](doc/analysis-env-setup.md)
+- ✅ [源码注释规范](doc/annotaion-spec.md)
 
 # 变更日志
 - 200406 java.lang.Integer
