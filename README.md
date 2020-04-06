@@ -60,7 +60,7 @@
 - java.lang.Character -> TODO
 - java.lang.Byte      -> TODO
 - java.lang.Short     -> TODO
-- [✅java.lang.Integer](doc/java.lang.Integer.md)
+- ✅ [java.lang.Integer](doc/java.lang.Integer.md)
 - java.lang.Long      -> TODO
 - java.lang.Float     -> TODO
 - java.lang.Double    -> TODO
