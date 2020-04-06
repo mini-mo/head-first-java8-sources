@@ -55,25 +55,51 @@
 
 # 分析进度
 ## java.lang 包
-### 8 个包装类
+### 基本类型包装类
 - java.lang.Boolean   -> TODO
 - java.lang.Character -> TODO
 - java.lang.Byte      -> TODO
 - java.lang.Short     -> TODO
-- [java.lang.Integer](doc/java.lang.Integer.md)   -> DONE
+- [✅java.lang.Integer](doc/java.lang.Integer.md)
 - java.lang.Long      -> TODO
 - java.lang.Float     -> TODO
 - java.lang.Double    -> TODO
 
 ### String 相关
+- [java.lang.String](doc/java.lang.String.md)  -> TODO
 
 ### Object 相关
+- [java.lang.Object](doc/java.lang.Object.md)  -> TODO
 
 ### System 相关
+- [java.lang.System](doc/java.lang.System.md)  -> TODO
+
+### Thread 相关
+- [java.lang.Thread](doc/java.lang.Thread.md)  -> TODO
+
+## java.io 包
+
+## java.nio 包
+
+## java.net 包
+
+## java.time 包
+
+## java.util 基本数据结构
+
+## java.util.concurrent 包
+
+## java.util.regex 包
+
+## java.util.function 包
+
+## java.util.stream 包
+
+## java.util.logging 包
 
 # 相关记录
-- [源码分析环境搭建](doc/analysis-env-setup.md)
-- [源码注释规范](doc/annotaion-spec.md)
+- [✅源码分析环境搭建](doc/analysis-env-setup.md)
+- [✅源码注释规范](doc/annotaion-spec.md)
 
 # 变更日志
 - 200406 java.lang.Integer
