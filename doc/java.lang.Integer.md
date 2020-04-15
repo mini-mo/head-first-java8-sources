@@ -6,7 +6,7 @@ Integer 是原始类型 int 的包装类, 提供了一些处理 int 类型的方
 ![java.lang.Integer](java.lang.Integer.png)
 
 ## 常见用法
-![测试类](../tests/lang/IntegerTest.java)
+[测试类](../tests/lang/IntegerTest.java)
 ```java
 int x = 1;
 ```

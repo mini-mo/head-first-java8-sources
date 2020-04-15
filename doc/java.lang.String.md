@@ -3,7 +3,7 @@
 出镜率和基本类型一样高的核心数据结构，可以没有 boolean , 但是不能没有 String. 帝国基石。  
 
 ## 常见用法
-![测试类](../tests/lang/StringTest.java)
+[测试类](../tests/lang/StringTest.java)
 ```java
 int length = "test".length();
 assertEquals(4, length);
