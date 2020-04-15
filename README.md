@@ -102,5 +102,5 @@
 - ✅ [源码注释规范](doc/annotaion-spec.md)
 
 # 变更日志
-- 200406 java.lang.Integer
+- 200406 java.lang.IntegerTest
 - 200403 初始化

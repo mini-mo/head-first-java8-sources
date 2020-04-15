@@ -1,6 +1,6 @@
 package lang;
 
-public class Integer {
+public class IntegerTest {
 
   public static void main(String[] args) {
     test_bitCount();
@@ -12,8 +12,8 @@ public class Integer {
     int x = 0xaaaaaaaa;
     int y = 16;
 //    int count = bitCount(x);
-    int count = java.lang.Integer.bitCount(x);
-    assertEquals(y,count);
+    int count = IntegerTest.bitCount(x);
+    assertEquals(y, count);
   }
 
   public static int bitCount(int i) {
@@ -28,14 +28,14 @@ public class Integer {
   public static void test_reverse() {
     int x = 0b10101010101010101010101010101010;
     int y = 0b01010101010101010101010101010101;
-    int reversed = java.lang.Integer.reverse(x);
+    int reversed = Integer.reverse(x);
     assertEquals(y, reversed);
   }
 
   public static void test_reverseBytes() {
     int x = 0b11000000001100000000110000000011;
     int y = 0b00000011000011000011000011000000;
-    int reserved = java.lang.Integer.reverseBytes(x);
+    int reserved = Integer.reverseBytes(x);
     assertEquals(y, reserved);
   }
 

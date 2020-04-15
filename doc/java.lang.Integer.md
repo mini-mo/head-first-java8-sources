@@ -3,18 +3,19 @@
 Integer 是原始类型 int 的包装类, 提供了一些处理 int 类型的方法,和一些 Integer, String 互相转换的方法, 以及一些位运算. 
 
 ## 继承结构
-```bash
-java.lang.Object
- - java.lang.Number
-   - java.lang.Integer
+![java.lang.Integer](java.lang.Integer.png)
+
+## 常见用法
+![测试类](../tests/lang/IntegerTest.java)
+```java
+int x = 1;
 ```
 
 ## 主要属性
 ### 成员变量
 ```java
 private final int value; // 真实的 int 值
-```
-### 静态变量
+``` ### 静态变量
 ```java
 public static final int MIN_VALUE = 0x80000000; // => 0b10000000000000000000000000000000 => -2147483648
 public static final int MAX_VALUE = 0x7fffffff; // => 0b01111111111111111111111111111111 =>  2147483647
