@@ -143,8 +143,8 @@ public String(byte bytes[], int offset, int length, Charset charset) {
 
 3. String 的不变性，不可变意味着什么， 为什么要设计为不可变， 怎么实现不可变。 
 
-4. 关于 String intern 方法。
-建议不用深究， 意义不大，在几个主流代码库（spring, netty, dubbo) 搜索均为该方法的使用。
+4. 关于 String intern 方法。  
+建议不用深究， 意义不大，在几个主流代码库（spring, netty, dubbo) 搜索均没有该方法的使用。
 
 5. switch 语句与 String .
 
