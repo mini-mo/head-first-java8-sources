@@ -150,7 +150,7 @@ public String(byte bytes[], int offset, int length, Charset charset) {
 建议不用深究， 意义不大，在几个主流代码库（spring, netty, dubbo) 搜索均没有该方法的使用。
 
 5. [switch](https://docs.oracle.com/javase/specs/jls/se8/html/jls-14.html#jls-14.11) 语句与 String  
-> The type of the Expression must be char, byte, short, int, Character, Byte, Short, Integer, or an enum type (§8.9), or a compile-time error occurs.  
+> The type of the Expression must be char, byte, short, int, Character, Byte, Short, Integer, String, or an enum type (§8.9), or a compile-time error occurs.
 
 JDK 1.7 的新特性，编译器做的手脚，可以通过反编译一探究竟
 ```java
