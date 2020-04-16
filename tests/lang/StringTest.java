@@ -1,5 +1,6 @@
 package lang;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -11,8 +12,18 @@ public class StringTest {
     test_reflection();
   }
 
+  // 改变字符串
   private static void test_reflection() {
-
+    String test = "test";
+    try {
+      Field filed = String.class.getDeclaredField("value");
+      filed.setAccessible(true);
+      char[] val = (char[]) filed.get(test);
+      val[0] = 'T';
+      assertEquals("Test", test);
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      e.printStackTrace();
+    }
   }
 
   public static void test() {

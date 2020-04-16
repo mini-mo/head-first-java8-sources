@@ -146,7 +146,88 @@ public String(byte bytes[], int offset, int length, Charset charset) {
 4. 关于 String intern 方法。  
 建议不用深究， 意义不大，在几个主流代码库（spring, netty, dubbo) 搜索均没有该方法的使用。
 
-5. switch 语句与 String .
+5. [switch](https://docs.oracle.com/javase/specs/jls/se8/html/jls-14.html#jls-14.11) 语句与 String  
+> The type of the Expression must be char, byte, short, int, Character, Byte, Short, Integer, or an enum type (§8.9), or a compile-time error occurs.  
+
+JDK 1.7 的新特性，编译器做的手脚，可以通过反编译一探究竟
+```java
+public class StringSwitch {
+  public static void main(String[] args) {
+    String test = "test";
+    int result = 0;
+    switch (test){
+     case "test":
+        result = 1;
+        break;
+     case "test2":
+        result = 2;
+        break;
+      default:
+        break;
+    }
+  }
+}
+```
+反编译代码如下  
+```bash
+Compiled from "StringSwitch.java"
+public class StringSwitch {
+  public StringSwitch();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: ldc           #2                  // String test
+       2: astore_1
+       3: iconst_0
+       4: istore_2
+       5: aload_1
+       6: astore_3
+       7: iconst_m1
+       8: istore        4
+      10: aload_3
+      11: invokevirtual #3                  // Method java/lang/String.hashCode:()I
+      14: lookupswitch  { // 2
+               3556498: 40
+             110251488: 55
+               default: 67
+          }
+      40: aload_3
+      41: ldc           #2                  // String test
+      43: invokevirtual #4                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      46: ifeq          67
+      49: iconst_0
+      50: istore        4
+      52: goto          67
+      55: aload_3
+      56: ldc           #5                  // String test2
+      58: invokevirtual #4                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      61: ifeq          67
+      64: iconst_1
+      65: istore        4
+      67: iload         4
+      69: lookupswitch  { // 2
+                     0: 96
+                     1: 101
+               default: 106
+          }
+      96: iconst_1
+      97: istore_2
+      98: goto          106
+     101: iconst_2
+     102: istore_2
+     103: goto          106
+     106: return
+}
+```
+可以看到最终转化成 lookupswitch 指令。  
+3556498 是字符串 "test" 的 hashCode  
+110251488 是字符串 "test2" 的 hashCode  
+
+最终还是使用了 int 来实现 switch 的。 处理方式跟对 enum 类型支持是一样的。 
 
 ## 补充
 
