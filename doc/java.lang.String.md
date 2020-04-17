@@ -162,6 +162,9 @@ public class StringInit {
  9: invokespecial #4                  // Method java/lang/String."<init>":(Ljava/lang/String;)V
 12: astore_2
 13: return
+
+# ------
+
 # String x = "test" ， 对应两条指令
        0: ldc           #2                  // String test
        2: astore_1
@@ -190,7 +193,7 @@ astore_2 把操作数栈栈顶数据存到本地变量表 2
 >through the {@code StringBuilder}(or {@code StringBuffer})
 >class and its {@code append} method.
 
-还是编辑器的魔法，编译期使用 StringBuilder append 构建的。 这是 Java 里唯一的运算符重载。 
+还是编译器的魔法，编译期使用 StringBuilder append 构建的。 这是 Java 里唯一的运算符重载。 
 源码  
 ```java
 public class StringPlus {
