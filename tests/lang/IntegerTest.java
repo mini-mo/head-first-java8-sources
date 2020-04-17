@@ -1,5 +1,7 @@
 package lang;
 
+import static unit.Unit.assertEquals;
+
 public class IntegerTest {
 
   public static void main(String[] args) {
@@ -37,12 +39,5 @@ public class IntegerTest {
     int y = 0b00000011000011000011000011000000;
     int reserved = Integer.reverseBytes(x);
     assertEquals(y, reserved);
-  }
-
-  public static void assertEquals(int expected, int result) {
-    if (expected == result) {
-      return;
-    }
-    System.err.println("test failure, expected " + expected + " but " + result);
   }
 }
