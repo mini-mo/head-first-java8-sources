@@ -85,7 +85,9 @@ private static final ObjectStreamField[] serialPersistentFields =
 ```
 
 ## 主要方法
+
 ### 构造函数
+
 ```java
 /**
  * Initializes a newly created {@code String} object so that it represents
@@ -134,6 +136,7 @@ public String(byte bytes[], int offset, int length, Charset charset) {
 }
 
 ```
+
 ### 实例方法
 
 
@@ -184,7 +187,8 @@ invokespecial 执行构造方法， 对应 String(String x). 会消耗掉操作�
 astore_2 把操作数栈栈顶数据存到本地变量表 2
 ```
 从上面的反编译字节码可以看出 String x = "xxx" 的效率更高。   
-**画外音** 总是不可避免的和字节码打交道, 就是写 C 语言不可避免的和 ASM 打交道一样。 
+
+> **画外音:** 总是不可避免的和字节码打交道, 就像写 C 语言不可避免的和 ASM 打交道一样。 
 
 ### ```"xxx" + "yyy"``` 是什么魔法？ 如果用过 C 语言，会发现字符串不能直接相加。  
 >The Java language provides special support for the string
