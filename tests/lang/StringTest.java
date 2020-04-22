@@ -1,7 +1,9 @@
 package lang;
 
+import static unit.Unit.assertEquals;
+
+import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class StringTest {
 
@@ -11,8 +13,18 @@ public class StringTest {
     test_reflection();
   }
 
+  // 改变字符串
   private static void test_reflection() {
-
+    String test = "test";
+    try {
+      Field filed = String.class.getDeclaredField("value");
+      filed.setAccessible(true);
+      char[] val = (char[]) filed.get(test);
+      val[0] = 'T';
+      assertEquals("Test", test);
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      e.printStackTrace();
+    }
   }
 
   public static void test() {
@@ -68,33 +80,5 @@ public class StringTest {
 
     String j2 = String.join(",", Arrays.asList("x", "y", "z"));
     assertEquals("x,y,z", j2);
-  }
-
-  private static void assertEquals(char expected, char result) {
-    if (Objects.equals(expected, result)) {
-      return;
-    }
-    System.err.println("test failure, expected " + expected + " but " + result);
-  }
-
-  private static void assertEquals(boolean expected, boolean result) {
-    if (Objects.equals(expected, result)) {
-      return;
-    }
-    System.err.println("test failure, expected " + expected + " but " + result);
-  }
-
-  public static void assertEquals(String expected, String result) {
-    if (Objects.equals(expected, result)) {
-      return;
-    }
-    System.err.println("test failure, expected " + expected + " but " + result);
-  }
-
-  public static void assertEquals(int expected, int result) {
-    if (Objects.equals(expected, result)) {
-      return;
-    }
-    System.err.println("test failure, expected " + expected + " but " + result);
   }
 }

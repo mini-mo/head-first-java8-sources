@@ -1,5 +1,7 @@
 package lang;
 
+import static unit.Unit.assertEquals;
+
 public class IntegerTest {
 
   public static void main(String[] args) {
