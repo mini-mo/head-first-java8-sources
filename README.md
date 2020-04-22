@@ -66,7 +66,7 @@
 - java.lang.Double    -> TODO
 
 ### String 相关
-- [java.lang.String](doc/java.lang.String.md)  -> TODO
+- ✅ [java.lang.String](doc/java.lang.String.md)
 
 ### Object 相关
 - [java.lang.Object](doc/java.lang.Object.md)  -> TODO
@@ -107,5 +107,5 @@
 - ✅ [源码注释规范](doc/annotaion-spec.md)
 
 # 变更日志
-- 200406 java.lang.IntegerTest
+- 200406 java.lang.Integer
 - 200403 初始化
