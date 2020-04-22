@@ -8,6 +8,7 @@ public class IntegerTest {
     test_bitCount();
     test_reverse();
     test_reverseBytes();
+    test_autoboxing_autounboxing();
   }
 
   public static void test_bitCount() {
@@ -39,5 +40,29 @@ public class IntegerTest {
     int y = 0b00000011000011000011000011000000;
     int reserved = Integer.reverseBytes(x);
     assertEquals(y, reserved);
+  }
+
+  public static void assertEquals(int expected, int result) {
+    if (expected == result) {
+      return;
+    }
+    System.err.println("test failure, expected " + expected + " but " + result);
+  }
+  public static void test_autoboxing_autounboxing(){
+      int i=100;
+      int j=100;
+      System.out.println(i == j);
+      int a = 127;
+      Integer b = 127;
+      System.out.println(a == b);
+      a=128;
+      b=128;
+      System.out.println(a==b);
+      Integer c = 127;
+      Integer d = 127;
+      System.out.println(c == d);
+      c = 128;
+      d = 128;
+      System.out.println(c == d);
   }
 }

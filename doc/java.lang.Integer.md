@@ -456,6 +456,10 @@ public static int signum(int i) {
 
 ## 常见问题
 
+## 潜在考点
+- 自动拆箱，自动装箱
+    - 推荐阅读
+        - [Autoboxing and Unboxing](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
 
 ## 补充
 1. 关于左移,右移,无符号右移
