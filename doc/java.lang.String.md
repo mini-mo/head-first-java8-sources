@@ -1,7 +1,3 @@
----
-状态： 完善中
----
-
 ## 概览
 出镜率和基本类型一样高的核心数据结构，可以没有 boolean , 但是不能没有 String. 帝国基石。  
 
@@ -139,8 +135,293 @@ public String(byte bytes[], int offset, int length, Charset charset) {
 
 ### 实例方法
 
+#### concat 字符串连接
+```java
+/**
+ * Concatenates the specified string to the end of this string.
+ * <p>
+ * If the length of the argument string is {@code 0}, then this
+ * {@code String} object is returned. Otherwise, a
+ * {@code String} object is returned that represents a character
+ * sequence that is the concatenation of the character sequence
+ * represented by this {@code String} object and the character
+ * sequence represented by the argument string.<p>
+ * Examples:
+ * <blockquote><pre>
+ * "cares".concat("s") returns "caress"
+ * "to".concat("get").concat("her") returns "together"
+ * </pre></blockquote>
+ *
+ * @param   str   the {@code String} that is concatenated to the end
+ *                of this {@code String}.
+ * @return  a string that represents the concatenation of this object's
+ *          characters followed by the string argument's characters.
+ */
+public String concat(String str) {
+    int otherLen = str.length();  // 小心 NullPointException.
+    if (otherLen == 0) {
+        return this;  // 返回自身
+    }
+    int len = value.length;
+    char buf[] = Arrays.copyOf(value, len + otherLen);  // 复制字符数组
+    str.getChars(buf, len); // 从 len 索引位置开始复制字节数组数据
+    return new String(buf, true);
+}
+```
+这个方法用的少，一般都是用 "xx" + "yy' 实现了。从实现上来看， 此方法会更高效。
+
+#### startsWith & endsWith 方法
+```java
+/**
+ * Tests if the substring of this string beginning at the
+ * specified index starts with the specified prefix.
+ *
+ * @param   prefix    the prefix.
+ * @param   toffset   where to begin looking in this string.
+ * @return  {@code true} if the character sequence represented by the
+ *          argument is a prefix of the substring of this object starting
+ *          at index {@code toffset}; {@code false} otherwise.
+ *          The result is {@code false} if {@code toffset} is
+ *          negative or greater than the length of this
+ *          {@code String} object; otherwise the result is the same
+ *          as the result of the expression
+ *          <pre>
+ *          this.substring(toffset).startsWith(prefix)
+ *          </pre>
+ */
+public boolean startsWith(String prefix, int toffset) {
+    char ta[] = value;
+    int to = toffset;
+    char pa[] = prefix.value;
+    int po = 0;
+    int pc = prefix.value.length;
+    // Note: toffset might be near -1>>>1.
+    if ((toffset < 0) || (toffset > value.length - pc)) {  // 可以有个小优化， toffset < 0 判断可以提到方法体最前面。 
+        return false;
+    }
+    while (--pc >= 0) { // 循环比对字符
+        if (ta[to++] != pa[po++]) { 
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * Tests if this string ends with the specified suffix.
+ *
+ * @param   suffix   the suffix.
+ * @return  {@code true} if the character sequence represented by the
+ *          argument is a suffix of the character sequence represented by
+ *          this object; {@code false} otherwise. Note that the
+ *          result will be {@code true} if the argument is the
+ *          empty string or is equal to this {@code String} object
+ *          as determined by the {@link #equals(Object)} method.
+ */
+public boolean endsWith(String suffix) {
+    return startsWith(suffix, value.length - suffix.value.length); // 调用 startsWith 从末尾最近处开始比对。
+}
+```
+这两兄弟出镜率也挺高。实现比较简单。 
+
+#### indexOf 系列
+主要包含 indexOf , lastIndexOf 方法。 判断指定字符或字符串在目标字符串的起始位置。
+
+```java
+/**
+ * Returns the index within this string of the first occurrence of the
+ * specified character, starting the search at the specified index.
+ * <p>
+ * If a character with value {@code ch} occurs in the
+ * character sequence represented by this {@code String}
+ * object at an index no smaller than {@code fromIndex}, then
+ * the index of the first such occurrence is returned. For values
+ * of {@code ch} in the range from 0 to 0xFFFF (inclusive),
+ * this is the smallest value <i>k</i> such that:
+ * <blockquote><pre>
+ * (this.charAt(<i>k</i>) == ch) {@code &&} (<i>k</i> &gt;= fromIndex)
+ * </pre></blockquote>
+ * is true. For other values of {@code ch}, it is the
+ * smallest value <i>k</i> such that:
+ * <blockquote><pre>
+ * (this.codePointAt(<i>k</i>) == ch) {@code &&} (<i>k</i> &gt;= fromIndex)
+ * </pre></blockquote>
+ * is true. In either case, if no such character occurs in this
+ * string at or after position {@code fromIndex}, then
+ * {@code -1} is returned.
+ *
+ * <p>
+ * There is no restriction on the value of {@code fromIndex}. If it
+ * is negative, it has the same effect as if it were zero: this entire
+ * string may be searched. If it is greater than the length of this
+ * string, it has the same effect as if it were equal to the length of
+ * this string: {@code -1} is returned.
+ *
+ * <p>All indices are specified in {@code char} values
+ * (Unicode code units).
+ *
+ * @param   ch          a character (Unicode code point).
+ * @param   fromIndex   the index to start the search from.
+ * @return  the index of the first occurrence of the character in the
+ *          character sequence represented by this object that is greater
+ *          than or equal to {@code fromIndex}, or {@code -1}
+ *          if the character does not occur.
+ */
+public int indexOf(int ch, int fromIndex) {
+    final int max = value.length;
+    if (fromIndex < 0) {
+        fromIndex = 0;
+    } else if (fromIndex >= max) {
+        // Note: fromIndex might be near -1>>>1.
+        return -1;
+    }
+
+    if (ch < Character.MIN_SUPPLEMENTARY_CODE_POINT) { // unicode 最小值
+        // handle most cases here (ch is a BMP code point or a
+        // negative value (invalid code point))
+        final char[] value = this.value;
+        for (int i = fromIndex; i < max; i++) {
+            if (value[i] == ch) {
+                return i;
+            }
+        }
+        return -1;
+    } else {
+        return indexOfSupplementary(ch, fromIndex);
+    }
+// 判断字符在字符串的起始位置， 简而言之， 使用 ascii 码性能最好。
+
+}
+
+/**
+ * Code shared by String and StringBuffer to do searches. The
+ * source is the character array being searched, and the target
+ * is the string being searched for.
+ *
+ * @param   source       the characters being searched.
+ * @param   sourceOffset offset of the source string.
+ * @param   sourceCount  count of the source string.
+ * @param   target       the characters being searched for.
+ * @param   targetOffset offset of the target string.
+ * @param   targetCount  count of the target string.
+ * @param   fromIndex    the index to begin searching from.
+ */
+static int indexOf(char[] source, int sourceOffset, int sourceCount,
+        char[] target, int targetOffset, int targetCount,
+        int fromIndex) {
+    if (fromIndex >= sourceCount) {
+        return (targetCount == 0 ? sourceCount : -1);
+    }
+    if (fromIndex < 0) {
+        fromIndex = 0;
+    }
+    if (targetCount == 0) {
+        return fromIndex;
+    }
+
+    char first = target[targetOffset];
+    int max = sourceOffset + (sourceCount - targetCount);
+
+    for (int i = sourceOffset + fromIndex; i <= max; i++) {
+        /* Look for first character. */
+        if (source[i] != first) {
+            while (++i <= max && source[i] != first);
+        }
+
+        /* Found first character, now look at the rest of v2 */
+        if (i <= max) {
+            int j = i + 1;
+            int end = j + targetCount - 1;
+            for (int k = targetOffset + 1; j < end && source[j]
+                    == target[k]; j++, k++);
+
+            if (j == end) {
+                /* Found whole string. */
+                return i - sourceOffset;
+            }
+        }
+    }
+    return -1;
+}
+// 1. 找到首字符的位置
+// 2. 从首字符的位置循环比对， 都相等返回首字符的位置
+
+
+
+/**
+ * Returns true if and only if this string contains the specified
+ * sequence of char values.
+ *
+ * @param s the sequence to search for
+ * @return true if this string contains {@code s}, false otherwise
+ * @since 1.5
+ */
+public boolean contains(CharSequence s) {
+    return indexOf(s.toString()) > -1;
+}
+// indexOf 的应用， 判断是否包含指定字符串
+```
+
+#### 正则表达式相关
+- split
+- replace
+- replaceAll
+分析正则表达式时再补充。
 
 ### 静态方法
+#### join 方法
+1.8 新加的。
+```java
+/**
+ * Returns a new {@code String} composed of copies of the
+ * {@code CharSequence elements} joined together with a copy of the
+ * specified {@code delimiter}.
+ *
+ * <blockquote>For example,
+ * <pre>{@code
+ *     List<String> strings = new LinkedList<>();
+ *     strings.add("Java");strings.add("is");
+ *     strings.add("cool");
+ *     String message = String.join(" ", strings);
+ *     //message returned is: "Java is cool"
+ *
+ *     Set<String> strings = new LinkedHashSet<>();
+ *     strings.add("Java"); strings.add("is");
+ *     strings.add("very"); strings.add("cool");
+ *     String message = String.join("-", strings);
+ *     //message returned is: "Java-is-very-cool"
+ * }</pre></blockquote>
+ *
+ * Note that if an individual element is {@code null}, then {@code "null"} is added.
+ *
+ * @param  delimiter a sequence of characters that is used to separate each
+ *         of the {@code elements} in the resulting {@code String}
+ * @param  elements an {@code Iterable} that will have its {@code elements}
+ *         joined together.
+ *
+ * @return a new {@code String} that is composed from the {@code elements}
+ *         argument
+ *
+ * @throws NullPointerException If {@code delimiter} or {@code elements}
+ *         is {@code null}
+ *
+ * @see    #join(CharSequence,CharSequence...)
+ * @see    java.util.StringJoiner
+ * @since 1.8
+ */
+public static String join(CharSequence delimiter,
+        Iterable<? extends CharSequence> elements) {
+    Objects.requireNonNull(delimiter);
+    Objects.requireNonNull(elements);
+    StringJoiner joiner = new StringJoiner(delimiter);
+    for (CharSequence cs: elements) {
+        joiner.add(cs);
+    }
+    return joiner.toString();
+}
+```
+目的是把多个字符串以指定分隔符连接起来， 主要依赖的是 StringJoiner。 StringJoiner 的逻辑也很简单，使用 StringBuilder 连接。
+
 
 ## 常见问题
 ### 平时开发都是直接 ```String x = "xxx"```，没有使用 ```String x = new String("xxx") ``` ， 这两种方式有啥区别，怎么选择？
