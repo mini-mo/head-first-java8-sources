@@ -1,5 +1,6 @@
 package lang;
 
+
 import static unit.Unit.assertEquals;
 
 public class IntegerTest {
@@ -42,27 +43,21 @@ public class IntegerTest {
     assertEquals(y, reserved);
   }
 
-  public static void assertEquals(int expected, int result) {
-    if (expected == result) {
-      return;
-    }
-    System.err.println("test failure, expected " + expected + " but " + result);
-  }
   public static void test_autoboxing_autounboxing(){
       int i=100;
       int j=100;
-      System.out.println(i == j);
+      assertEquals(true,(i==j));
       int a = 127;
       Integer b = 127;
-      System.out.println(a == b);
+      assertEquals(true,(a==b));
       a=128;
       b=128;
-      System.out.println(a==b);
+      assertEquals(true,(a==b));
       Integer c = 127;
       Integer d = 127;
-      System.out.println(c == d);
+      assertEquals(true,(c==d));
       c = 128;
       d = 128;
-      System.out.println(c == d);
+      assertEquals(false,(c==d));
   }
 }
