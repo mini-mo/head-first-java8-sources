@@ -32,6 +32,13 @@ public abstract class Unit {
     System.err.println("test failure, expected " + expected + " but " + result);
   }
 
+  public static void assertEquals(long expected, long result) {
+    if (Objects.equals(expected, result)) {
+      return;
+    }
+    System.err.println("test failure, expected " + expected + " but " + result);
+  }
+
   public static void assertEquals(byte expected, byte result) {
     if (Objects.equals(expected, result)) {
       return;

@@ -20,10 +20,15 @@ public class UnsafeTest {
   }
 
   public static void main(String[] args) {
-    test_memory();
+    test_memory_byte();
+    test_memory_int();
+    test_memory_long();
+
+    test_memory_address_size();
+    test_memory_page_size();
   }
 
-  public static void test_memory() {
+  public static void test_memory_byte() {
     long byteAddr = 0;
     try {
       byteAddr = unsafe.allocateMemory(8);
@@ -37,5 +42,49 @@ public class UnsafeTest {
         unsafe.freeMemory(byteAddr);
       }
     }
+  }
+
+  public static void test_memory_int() {
+    long byteAddr = 0;
+    try {
+      byteAddr = unsafe.allocateMemory(32);
+      int val = Integer.MAX_VALUE;
+      unsafe.putInt(byteAddr, val);
+      int ub = unsafe.getInt(byteAddr);
+
+      assertEquals(val, ub);
+    } finally {
+      if (byteAddr != 0) {
+        unsafe.freeMemory(byteAddr);
+      }
+    }
+  }
+
+  public static void test_memory_long() {
+    long byteAddr = 0;
+    try {
+      byteAddr = unsafe.allocateMemory(Long.SIZE);
+      long val = Long.MAX_VALUE;
+      unsafe.putLong(byteAddr, val);
+      long ub = unsafe.getLong(byteAddr);
+
+      assertEquals(val, ub);
+    } finally {
+      if (byteAddr != 0) {
+        unsafe.freeMemory(byteAddr);
+      }
+    }
+  }
+
+  // 32位系统 4 , 64位系统 8
+  public static void test_memory_address_size() {
+    int size = unsafe.addressSize();
+    assertEquals(8, size);
+  }
+
+  // 一般都是 4k ? 系统内存页大小怎么调整？
+  public static void test_memory_page_size() {
+    int size = unsafe.pageSize();
+    assertEquals(4096, size);
   }
 }
